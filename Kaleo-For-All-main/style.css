@@ -453,6 +453,7 @@
       text-align: center;
       color: var(--text-light);
       width: 90%;
+      height: 100px;
       max-width: 800px;
     }
 
