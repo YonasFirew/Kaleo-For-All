@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #FFD700
+        }
+
+
+        .logo-icon {
+            color: var(--secondary) !important
+        }
+
+        .logo-text,
+        h1,
+        h2,
+        h3,
+        .card-header h2,
+        .user-name,
+        .user-role {
+            color: var(--primary) !important
+        }
+
+        .btn-primary {
+            background: var(--secondary) !important;
+            color: var(--primary) !important;
+            border: none !important
+        }
+
+        .btn-secondary {
+            background: transparent !important;
+            color: var(--primary) !important;
+            border: 2px solid var(--primary) !important
+        }
+
+
+        .role-badge {
+            background: var(--primary) !important;
+            color: #fff !important
+        }
+
+        .badge {
+            background: var(--secondary) !important;
+            color: var(--primary) !important
+        }
+
+        .stat-icon,
+        .activity-icon {
+            background-color: rgba(0, 51, 102, 0.08) !important;
+            color: var(--primary) !important
+        }
+
+        .status-indicator.active {
+            background: var(--secondary) !important
+        }
+
+        .status.status-active {
+            color: var(--secondary) !important
+        }
+
+        .status.status-inactive {
+            color: rgba(0, 0, 0, 0.45) !important
+        }
+
+        .chart-svg polyline,
+        .chart-svg circle,
+        .chart-svg line,
+        .chart-svg text {
+            stroke: var(--primary) !important;
+            fill: var(--primary) !important
+        }
+
+        .sidebar-nav .nav-item.active,
+        .sidebar-nav .nav-item.active i {
+            background: var(--secondary) !important;
+            color: var(--primary) !important;
+            border-left: 4px solid var(--primary) !important;
+            padding-left: 12px
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            color: var(--secondary) !important
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">M</div>
+                    <span class="logo-text">Michael</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" id="usersNavItem" data-target="userManagement">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Roles & Permissions</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Logs</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="badge">2</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img src="https://i.pravatar.cc/150?img=47" alt="Emily Jonson">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">Admin User</div>
+                        <div class="user-email">admin@michael.com</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="header-right">
+                    <div class="date-picker">
+                        <span>Monday, 6th March</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" data-view="card">
+                            <i class="fas fa-th"></i>
+                            <span>Card</span>
+                        </button>
+                        <button class="toggle-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                            <span>List</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- System Overview Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(0, 184, 217, 0.1); color: #00B8D9;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">1,247</div>
+                            <div class="stat-label">Total Users</div>
+                            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +12% this month</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(54, 179, 126, 0.1); color: #36B37E;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">892</div>
+                            <div class="stat-label">Active Users</div>
+                            <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +5% this month</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(142, 68, 173, 0.1); color: #8E44AD;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Admin Roles</div>
+                            <div class="stat-change">No change</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(231, 76, 60, 0.1); color: #E74C3C;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">23</div>
+                            <div class="stat-label">Pending Actions</div>
+                            <div class="stat-change negative"><i class="fas fa-arrow-down"></i> -8% this week</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Card -->
+                <div class="card last-tasks" id="userManagement">
+                    <div class="card-header">
+                        <div class="card-title-section">
+                            <h2>User Management</h2>
+                            <p>1,247 total users, 892 active</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-primary"><i class="fas fa-plus"></i> Add User</button>
+                            <button class="btn-secondary"><i class="fas fa-download"></i> Export</button>
+                        </div>
+                    </div>
+
+                    <!-- User Filters -->
+                    <div class="user-filters">
+                        <div class="filter-group">
+                            <label>Filter by Role:</label>
+                            <select class="filter-select" id="roleFilter">
+                                <option value="all">All Roles</option>
+                                <option value="admin">Admin</option>
+                                <option value="mod">Moderator</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Filter by Status:</label>
+                            <select class="filter-select" id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <input type="text" class="user-search" placeholder="Search users..." id="userSearch">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card View (Default) -->
+                    <div class="user-cards-view" id="cardView">
+                        <div class="user-cards-grid">
+                            <div class="user-card" data-role="admin" data-status="active">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=12" alt="Samanta Johnson">
+                                        <span class="status-indicator active"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Samanta Johnson</h3>
+                                    <p class="user-email">samanta@michael.com</p>
+                                    <span class="role-badge role-admin">Admin</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="user-card" data-role="user" data-status="active">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=33" alt="Bob Peterson">
+                                        <span class="status-indicator active"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Bob Peterson</h3>
+                                    <p class="user-email">bob@michael.com</p>
+                                    <span class="role-badge role-user">User</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 5 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="user-card" data-role="mod" data-status="inactive">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=20" alt="Kate O'Brien">
+                                        <span class="status-indicator inactive"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Kate O'Brien</h3>
+                                    <p class="user-email">kate@michael.com</p>
+                                    <span class="role-badge role-mod">Moderator</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 2 days ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="user-card" data-role="user" data-status="active">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=45" alt="Jack Foster">
+                                        <span class="status-indicator active"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Jack Foster</h3>
+                                    <p class="user-email">jack@michael.com</p>
+                                    <span class="role-badge role-user">User</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 1 day ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="user-card" data-role="admin" data-status="active">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=47" alt="Emily Watson">
+                                        <span class="status-indicator active"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Emily Watson</h3>
+                                    <p class="user-email">emily@michael.com</p>
+                                    <span class="role-badge role-admin">Admin</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 3 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="user-card" data-role="user" data-status="active">
+                                <div class="user-card-header">
+                                    <input type="checkbox" class="user-checkbox">
+                                    <div class="user-card-avatar">
+                                        <img src="https://i.pravatar.cc/150?img=5" alt="Michael Chen">
+                                        <span class="status-indicator active"></span>
+                                    </div>
+                                </div>
+                                <div class="user-card-body">
+                                    <h3>Michael Chen</h3>
+                                    <p class="user-email">michael@michael.com</p>
+                                    <span class="role-badge role-user">User</span>
+                                    <div class="user-card-meta">
+                                        <span class="meta-item"><i class="fas fa-clock"></i> 4 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="user-card-actions">
+                                    <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List View (Table) -->
+                    <div class="table-container" id="listView" style="display: none;">
+                        <table class="tasks-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll"></th>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-role="admin" data-status="active">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=12" alt="Samanta J.">
+                                            <span>Samanta Johnson</span>
+                                        </div>
+                                    </td>
+                                    <td>samanta@michael.com</td>
+                                    <td><span class="role-badge role-admin">Admin</span></td>
+                                    <td><span class="status status-active"><i class="fas fa-circle"></i> Active</span>
+                                    </td>
+                                    <td>2 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-role="user" data-status="active">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=33" alt="Bob P.">
+                                            <span>Bob Peterson</span>
+                                        </div>
+                                    </td>
+                                    <td>bob@michael.com</td>
+                                    <td><span class="role-badge role-user">User</span></td>
+                                    <td><span class="status status-active"><i class="fas fa-circle"></i> Active</span>
+                                    </td>
+                                    <td>5 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-role="mod" data-status="inactive">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=20" alt="Kate O.">
+                                            <span>Kate O'Brien</span>
+                                        </div>
+                                    </td>
+                                    <td>kate@michael.com</td>
+                                    <td><span class="role-badge role-mod">Moderator</span></td>
+                                    <td><span class="status status-inactive"><i class="fas fa-circle"></i>
+                                            Inactive</span></td>
+                                    <td>2 days ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-role="user" data-status="active">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=45" alt="Jack F.">
+                                            <span>Jack Foster</span>
+                                        </div>
+                                    </td>
+                                    <td>jack@michael.com</td>
+                                    <td><span class="role-badge role-user">User</span></td>
+                                    <td><span class="status status-active"><i class="fas fa-circle"></i> Active</span>
+                                    </td>
+                                    <td>1 day ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-role="admin" data-status="active">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=47" alt="Emily W.">
+                                            <span>Emily Watson</span>
+                                        </div>
+                                    </td>
+                                    <td>emily@michael.com</td>
+                                    <td><span class="role-badge role-admin">Admin</span></td>
+                                    <td><span class="status status-active"><i class="fas fa-circle"></i> Active</span>
+                                    </td>
+                                    <td>3 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-role="user" data-status="active">
+                                    <td><input type="checkbox"></td>
+                                    <td>
+                                        <div class="admin-avatar">
+                                            <img src="https://i.pravatar.cc/150?img=5" alt="Michael C.">
+                                            <span>Michael Chen</span>
+                                        </div>
+                                    </td>
+                                    <td>michael@michael.com</td>
+                                    <td><span class="role-badge role-user">User</span></td>
+                                    <td><span class="status status-active"><i class="fas fa-circle"></i> Active</span>
+                                    </td>
+                                    <td>4 hours ago</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- System Analytics Card -->
+                <div class="card productivity">
+                    <div class="card-header">
+                        <h2>System Analytics</h2>
+                        <div class="date-range">
+                            <span>Last 7 days</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot research"></span>
+                                <span>New Users</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot design"></span>
+                                <span>Active Sessions</span>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <svg id="productivityChart" class="chart-svg" viewBox="0 0 400 200">
+                                <!-- Grid lines -->
+                                <line x1="40" y1="20" x2="40" y2="180" stroke="#E0E0E0" stroke-width="1" />
+                                <line x1="40" y1="180" x2="380" y2="180" stroke="#E0E0E0" stroke-width="1" />
+
+                                <!-- Y-axis labels -->
+                                <text x="35" y="185" text-anchor="end" fill="#7F8C8D" font-size="10">0</text>
+                                <text x="35" y="145" text-anchor="end" fill="#7F8C8D" font-size="10">100</text>
+                                <text x="35" y="105" text-anchor="end" fill="#7F8C8D" font-size="10">200</text>
+                                <text x="35" y="65" text-anchor="end" fill="#7F8C8D" font-size="10">300</text>
+                                <text x="35" y="25" text-anchor="end" fill="#7F8C8D" font-size="10">400</text>
+
+                                <!-- X-axis labels -->
+                                <text x="70" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Mon</text>
+                                <text x="110" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Tue</text>
+                                <text x="150" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Wed</text>
+                                <text x="190" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Thu</text>
+                                <text x="230" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Fri</text>
+                                <text x="270" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Sat</text>
+                                <text x="310" y="195" text-anchor="middle" fill="#7F8C8D" font-size="10">Sun</text>
+
+                                <!-- New Users line (teal) -->
+                                <polyline points="70,160 110,140 150,120 190,100 230,110 270,90 310,80" fill="none"
+                                    stroke="#00B8D9" stroke-width="2" />
+
+                                <!-- Active Sessions line (purple) -->
+                                <polyline points="70,170 110,150 150,130 190,110 230,120 270,100 310,90" fill="none"
+                                    stroke="#8E44AD" stroke-width="2" />
+
+                                <!-- Data points for New Users -->
+                                <circle cx="70" cy="160" r="4" fill="#00B8D9" />
+                                <circle cx="110" cy="140" r="4" fill="#00B8D9" />
+                                <circle cx="150" cy="120" r="4" fill="#00B8D9" />
+                                <circle cx="190" cy="100" r="4" fill="#00B8D9" />
+                                <circle cx="230" cy="110" r="4" fill="#00B8D9" />
+                                <circle cx="270" cy="90" r="4" fill="#00B8D9" />
+                                <circle cx="310" cy="80" r="4" fill="#00B8D9" />
+
+                                <!-- Data points for Active Sessions -->
+                                <circle cx="70" cy="170" r="4" fill="#8E44AD" />
+                                <circle cx="110" cy="150" r="4" fill="#8E44AD" />
+                                <circle cx="150" cy="130" r="4" fill="#8E44AD" />
+                                <circle cx="190" cy="110" r="4" fill="#8E44AD" />
+                                <circle cx="230" cy="120" r="4" fill="#8E44AD" />
+                                <circle cx="270" cy="100" r="4" fill="#8E44AD" />
+                                <circle cx="310" cy="90" r="4" fill="#8E44AD" />
+
+                                <!-- Highlight line for Thu -->
+                                <line x1="190" y1="20" x2="190" y2="180" stroke="#2C3E50" stroke-width="1"
+                                    stroke-dasharray="5,5" opacity="0.3" />
+                                <circle cx="190" cy="100" r="6" fill="#00B8D9" opacity="0.5" />
+
+                                <!-- Tooltip -->
+                                <rect x="160" y="70" width="60" height="20" rx="4" fill="#2C3E50" opacity="0.9" />
+                                <text x="190" y="83" text-anchor="middle" fill="white" font-size="10">245 users</text>
+                            </svg>
+                        </div>
+                        <p class="update-frequency">Data updates every 3 hours</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Logs Card -->
+                <div class="card projects-card dark">
+                    <div class="projects-header">
+                        <h2>Recent Activity Logs</h2>
+                        <button class="btn-text">View All</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon"
+                                style="background-color: rgba(0, 184, 217, 0.15); color: #00B8D9;">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">New user registered</div>
+                                <div class="activity-description">Samanta Johnson created an account</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"
+                                style="background-color: rgba(54, 179, 126, 0.15); color: #36B37E;">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">User updated</div>
+                                <div class="activity-description">Bob Peterson's role changed to Moderator</div>
+                                <div class="activity-time">5 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"
+                                style="background-color: rgba(231, 76, 60, 0.15); color: #E74C3C;">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">User deleted</div>
+                                <div class="activity-description">Inactive account removed by Admin</div>
+                                <div class="activity-time">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon"
+                                style="background-color: rgba(142, 68, 173, 0.15); color: #8E44AD;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Permissions updated</div>
+                                <div class="activity-description">Admin role permissions modified</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- Sidebar behavior: activate items, scroll to section, keyboard support, highlight on scroll -->
+    <script>
+        (function () {
+            const navItems = Array.from(document.querySelectorAll('.sidebar-nav .nav-item'));
+
+            function activateItem(item) {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            }
+
+            navItems.forEach(item => {
+                // Make anchor-like behavior safe
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    activateItem(item);
+                    const target = item.dataset.target;
+                    if (target) {
+                        const el = document.getElementById(target);
+                        if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                    }
+                });
+
+                // Keyboard support: Enter / Space
+                item.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); }
+                });
+            });
+
+            // Build list of target sections referenced by sidebar items
+            const targets = navItems.map(i => i.dataset.target).filter(Boolean).map(id => document.getElementById(id)).filter(Boolean);
+
+            // On scroll, set the active nav item to the section nearest the top of viewport
+            const offset = 120; // offset from top to consider
+            function onScroll() {
+                let found = null;
+                for (const t of targets) {
+                    const r = t.getBoundingClientRect();
+                    if (r.top <= offset && r.bottom > offset) { found = t; break; }
+                }
+                if (!found) {
+                    // if none found, pick the first that is below the fold
+                    for (const t of targets) { if (t.getBoundingClientRect().top > 0) { found = t; break; } }
+                }
+                if (found) {
+                    const match = navItems.find(i => i.dataset.target === found.id);
+                    if (match) activateItem(match);
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            // run once to set initial state
+            setTimeout(onScroll, 200);
+        })();
+    </script>
+</body>
+
+</html>

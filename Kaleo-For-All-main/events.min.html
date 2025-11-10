@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Events — Saint Michael</title>
+    <link rel="stylesheet" href="style.min.css">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #DAA520;
+            --accent: #228B22;
+            --light: #F5F5DC;
+            --dark: #2F4F4F;
+            --text: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            --transition: all .3s ease
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden
+        }
+
+        .events-page {
+            padding-top: 100px;
+            padding-bottom: 3rem
+        }
+
+        .events-page-header {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: var(--text-light);
+            margin-bottom: 3rem
+        }
+
+        .events-page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, .5)
+        }
+
+        .events-page-header p {
+            font-size: 1.2rem;
+            opacity: .9
+        }
+
+        .event-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .event-detail-card {
+            background: #fff;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition)
+        }
+
+        .event-detail-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
+            transform: translateY(-5px)
+        }
+
+        .event-detail-header {
+            position: relative;
+            height: 300px;
+            overflow: hidden
+        }
+
+        .event-detail-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition)
+        }
+
+        .event-detail-card:hover .event-detail-header img {
+            transform: scale(1.05)
+        }
+
+        .event-detail-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, .9), rgba(0, 0, 0, .5), transparent);
+            color: var(--text-light)
+        }
+
+        .event-detail-title h2 {
+            font-size: 2rem;
+            margin-bottom: .5rem;
+            color: var(--secondary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, .8)
+        }
+
+        .event-detail-content {
+            padding: 2.5rem
+        }
+
+        .event-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary)
+        }
+
+        .info-item .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0
+        }
+
+        .info-item-content h3 {
+            font-size: .9rem;
+            color: var(--primary);
+            margin-bottom: .5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .info-item-content p {
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 500
+        }
+
+        .event-description {
+            margin-top: 2rem
+        }
+
+        .event-description h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .event-description p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1.5rem
+        }
+
+        .event-spirit {
+            background: linear-gradient(135deg, rgba(218, 165, 32, .1), rgba(139, 69, 19, .1));
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem
+        }
+
+        .event-spirit h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: .75rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .event-spirit p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text)
+        }
+
+        @media(max-width:768px) {
+            .events-page-header h1 {
+                font-size: 2rem
+            }
+
+            .event-detail-header {
+                height: 200px
+            }
+
+            .event-detail-title h2 {
+                font-size: 1.5rem
+            }
+
+            .event-detail-content {
+                padding: 1.5rem
+            }
+
+            .event-info-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="navbar-content"><a href="index.html" class="navbar-logo" aria-label="St Michael home"><span
+                    class="logo-icon" aria-hidden="true">⛪</span><span class="logo-text">St. Michael</span></a>
+            <ul class="nav-links" id="main-nav" aria-label="Primary navigation">
+                <li><a href="index.html"><span class="nav-icon" aria-hidden="true">🏠</span><span
+                            class="nav-text">Home</span></a></li>
+                <li><a href="about.html"><span class="nav-icon" aria-hidden="true">👥</span><span
+                            class="nav-text">About</span></a></li>
+                <li><a href="events.html" class="active"><span class="nav-icon" aria-hidden="true">📅</span><span
+                            class="nav-text">Events</span></a></li>
+                <li><a href="#gallery"><span class="nav-icon" aria-hidden="true">❤️</span><span
+                            class="nav-text">Gallery</span></a></li>
+                <li><a href="#contact"><span class="nav-icon" aria-hidden="true">💬</span><span
+                            class="nav-text">Contact</span></a></li>
+            </ul><button class="menu-toggle" aria-label="Toggle menu"
+                id="menu-toggle"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="events-page">
+        <div class="events-page-header">
+            <h1>Ethiopian Orthodox Christian Holidays</h1>
+            <p>Discover the rich traditions and spiritual significance of our sacred celebrations</p>
+        </div>
+        <div class="event-detail-container">
+            <div class="event-detail-card" id="event-1">
+                <div class="event-detail-header"><img
+                        src="https://images.unsplash.com/photo-1603383928972-0d6b0c8b0b0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                        alt="The Divine Birth of Light">
+                    <div class="event-detail-title">
+                        <h2>1️⃣ The Divine Birth of Light – የብርሃን ትውልድ (Lidet / Genna)</h2>
+                    </div>
+                </div>
+                <div class="event-detail-content">
+                    <div class="event-info-grid">
+                        <div class="info-item"><span class="icon">📅</span>
+                            <div class="info-item-content">
+                                <h3>Ethiopian Calendar</h3>
+                                <p>ታህሳስ 29</p>
+                            </div>
+                        </div>
+                        <div class="info-item"><span class="icon">📆</span>
+                            <div class="info-item-content">
+                                <h3>Gregorian Equivalent</h3>
+                                <p>January 7</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-description">
+                        <h3>✨ Meaning</h3>
+                        <p>This sacred holiday celebrates the birth of Jesus Christ — the day the Light of the World was
+                            born. It is one of the most significant celebrations in the Ethiopian Orthodox Church,
+                            marking the incarnation of God as man. The celebration brings together families and
+                            communities in prayer, reflection, and joyous worship.</p>
+                    </div>
+                    <div class="event-spirit">
+                        <h4>🎉 Spirit of Celebration</h4>
+                        <p>Joy, white robes, and church hymns echoing "Amlak belu le beka!" (God is born for us!). The
+                            celebration is marked by beautiful processions, traditional music, and the sharing of
+                            special foods. Churches are filled with the faithful, and the atmosphere is one of profound
+                            joy and spiritual renewal.</p>
+                    </div>
+                </div>
+                <div class="event-detail-card" id="event-2">
+                    <div class="event-detail-header"><img
+                            src="https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="The Living Baptism">
+                        <div class="event-detail-title">
+                            <h2>2️⃣ The Living Baptism – የጥምቀት ቅዱስ ንፁህ መግቢያ (Timket)</h2>
+                        </div>
+                    </div>
+                    <div class="event-detail-content">
+                        <div class="event-info-grid">
+                            <div class="info-item"><span class="icon">📅</span>
+                                <div class="info-item-content">
+                                    <h3>Ethiopian Calendar</h3>
+                                    <p>ጥር 11</p>
+                                </div>
+                            </div>
+                            <div class="info-item"><span class="icon">📆</span>
+                                <div class="info-item-content">
+                                    <h3>Gregorian Equivalent</h3>
+                                    <p>January 19</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event-description">
+                            <h3>✨ Meaning</h3>
+                            <p>Timket commemorates the baptism of Jesus in the Jordan River by John the Baptist. This
+                                festival is one of the most colorful and vibrant celebrations in Ethiopia, symbolizing
+                                spiritual purification and renewal. It is a time when the faithful remember their own
+                                baptismal vows and recommit to their faith.</p>
+                        </div>
+                        <div class="event-spirit">
+                            <h4>🎨 Spirit of Celebration</h4>
+                            <p>Priests carry the Tabot (Ark) to rivers; a breathtaking celebration of purity and
+                                renewal. The festival features elaborate processions, with priests in colorful vestments
+                                carrying replicas of the Ark of the Covenant. The faithful gather at water sources to
+                                participate in the blessing of water, symbolizing the baptism of Christ and the renewal
+                                of their own spiritual lives.</p>
+                        </div>
+                    </div>
+                    <div class="event-detail-card" id="event-3">
+                        <div class="event-detail-header"><img
+                                src="https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                alt="Victory of the True Cross">
+                            <div class="event-detail-title">
+                                <h2>3️⃣ Victory of the True Cross – መስቀል (Meskel)</h2>
+                            </div>
+                        </div>
+                        <div class="event-detail-content">
+                            <div class="event-info-grid">
+                                <div class="info-item"><span class="icon">📅</span>
+                                    <div class="info-item-content">
+                                        <h3>Ethiopian Calendar</h3>
+                                        <p>መስከረም 17</p>
+                                    </div>
+                                </div>
+                                <div class="info-item"><span class="icon">📆</span>
+                                    <div class="info-item-content">
+                                        <h3>Gregorian Equivalent</h3>
+                                        <p>September 27</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-description">
+                                <h3>✨ Meaning</h3>
+                                <p>Meskel marks the finding of the True Cross by Queen Helena (Empress Helena), the
+                                    mother of Emperor Constantine. According to tradition, she discovered the cross on
+                                    which Jesus was crucified. This celebration is a testament to the power of faith and
+                                    the victory of light over darkness, truth over falsehood.</p>
+                            </div>
+                            <div class="event-spirit">
+                                <h4>🔥 Spirit of Celebration</h4>
+                                <p>Bonfires (Demera) are lit, symbolizing light defeating darkness. The celebration
+                                    begins with the building of a large bonfire, which is then lit as a symbol of the
+                                    discovery of the True Cross. People gather around the fire, singing hymns and
+                                    prayers, creating a powerful sense of community and shared faith. The ashes from the
+                                    fire are used to mark crosses on foreheads as a blessing.</p>
+                            </div>
+                        </div>
+                        <div class="event-detail-card" id="event-4">
+                            <div class="event-detail-header"><img
+                                    src="https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="The Glorious Resurrection">
+                                <div class="event-detail-title">
+                                    <h2>4️⃣ The Glorious Resurrection – ፋሲካ (Fasika)</h2>
+                                </div>
+                            </div>
+                            <div class="event-detail-content">
+                                <div class="event-info-grid">
+                                    <div class="info-item"><span class="icon">📅</span>
+                                        <div class="info-item-content">
+                                            <h3>Ethiopian Calendar</h3>
+                                            <p>Varies (usually between ሚያዚያ 23–27)</p>
+                                        </div>
+                                    </div>
+                                    <div class="info-item"><span class="icon">📆</span>
+                                        <div class="info-item-content">
+                                            <h3>Gregorian Equivalent</h3>
+                                            <p>April (varies yearly)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="event-description">
+                                    <h3>✨ Meaning</h3>
+                                    <p>Fasika is the celebration of Jesus Christ's resurrection after His crucifixion.
+                                        This is the most important and joyous celebration in the Christian calendar,
+                                        marking the victory of life over death, hope over despair. The resurrection is
+                                        the foundation of Christian faith, demonstrating God's power and love for
+                                        humanity.</p>
+                                </div>
+                                <div class="event-spirit">
+                                    <h4>🌅 Spirit of Celebration</h4>
+                                    <p>All-night vigil, fasting ends with joy, hymns, and shared love. The celebration
+                                        begins with a solemn all-night service on Holy Saturday, culminating in the
+                                        joyous announcement of Christ's resurrection. After the long period of fasting
+                                        during Lent, families gather to break the fast together, sharing special foods
+                                        and celebrating the triumph of life. The atmosphere is filled with hymns of
+                                        praise and thanksgiving.</p>
+                                </div>
+                                <div class="event-detail-card" id="event-5">
+                                    <div class="event-detail-header"><img
+                                            src="https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                            alt="The Holy Ascension">
+                                        <div class="event-detail-title">
+                                            <h2>5️⃣ The Holy Ascension – ዕርገት (Erget)</h2>
+                                        </div>
+                                    </div>
+                                    <div class="event-detail-content">
+                                        <div class="event-info-grid">
+                                            <div class="info-item"><span class="icon">📅</span>
+                                                <div class="info-item-content">
+                                                    <h3>Ethiopian Calendar</h3>
+                                                    <p>ግንቦት 23</p>
+                                                </div>
+                                            </div>
+                                            <div class="info-item"><span class="icon">📆</span>
+                                                <div class="info-item-content">
+                                                    <h3>Gregorian Equivalent</h3>
+                                                    <p>June 1 (approx.)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="event-description">
+                                            <h3>✨ Meaning</h3>
+                                            <p>Erget commemorates Christ's ascension to heaven after 40 days of
+                                                resurrection. This event marks the completion of Christ's earthly
+                                                ministry and His return to the Father. It is a celebration of hope, as
+                                                it reminds believers that through Christ, they too will one day ascend
+                                                to eternal life with God.</p>
+                                        </div>
+                                        <div class="event-spirit">
+                                            <h4>☁️ Spirit of Celebration</h4>
+                                            <p>Rejoicing that Jesus reigns with His Father above. The celebration is
+                                                marked by special church services that reflect on the mystery of the
+                                                ascension. Believers gather to give thanks for Christ's victory and to
+                                                be reminded of their own calling to spread the Gospel. The day is filled
+                                                with prayers, hymns, and a sense of joyful anticipation of the coming of
+                                                the Holy Spirit.</p>
+                                        </div>
+                                    </div>
+                                    <script src="script.min.js" defer></script>
+                                    <script>(function () { const btn = document.getElementById('menu-toggle'), nav = document.getElementById('main-nav'); if (btn && nav) { btn.addEventListener('click', () => { nav.classList.toggle('active'); btn.classList.toggle('active'); btn.setAttribute('aria-expanded', nav.classList.contains('active')) }); document.addEventListener('click', e => { if (!nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('active'); btn.classList.remove('active') } }); document.addEventListener('keydown', e => { if (e.key === 'Escape') { nav.classList.remove('active'); btn.classList.remove('active') } }) } })(); (function () { function s(h) { if (!h) return; const id = h.startsWith('#') ? h.substring(1) : h; const el = document.getElementById(id); if (el) { const navbarHeight = 100; const pos = el.offsetTop - navbarHeight; window.scrollTo({ top: pos, behavior: 'smooth' }) } } if (window.location.hash) { setTimeout(() => s(window.location.hash), 100) } document.addEventListener('click', function (e) { const a = e.target.closest('a[href*="#event-"]'); if (a) { const href = a.getAttribute('href'); const m = href.match(/#event-\d+/); if (m) { e.preventDefault(); s(m[0]); history.pushState(null, null, m[0]) } } }) })();</script>
+</body>
+
+</html>
